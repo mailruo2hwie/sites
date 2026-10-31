@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarePay | Экосистема</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* === БАЗА === */
+        :root {
+            --bg-main: #0a0a0c;
+            --bg-card: #141416;
+            --bg-hover: #1f1f22;
+            --accent: #ff6b00;
+            --accent-hover: #e65c00;
+            --accent-glow: rgba(255, 107, 0, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #8b8b93;
+            --border: #2a2a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+
+        /* === ШАПКА / HERO === */
+        .hero {
+            position: relative;
+            padding: 120px 20px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 107, 0, 0.15) 0%, transparent 60%);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* === КАРТОЧКИ НАВИГАЦИИ === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .nav-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-card-icon {
+            width: 44px;
+            height: 44px;
+            background: #1f1f22;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+
+        .nav-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .nav-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* === ОСНОВНОЙ КОНТЕНТ === */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Большой баннер */
+        .big-banner {
+            background: linear-gradient(135deg, #1a1005 0%, #0a0a0c 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .big-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            filter: blur(100px);
+            opacity: 0.2;
+            border-radius: 50%;
+        }
+
+        .big-banner h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .big-banner p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 80%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.2s;
+            position: relative;
+            z-index: 1;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 20px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Сайдбар */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .widget {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .activity-item span { color: var(--text-muted); }
+        .activity-item b { color: var(--text-main); font-weight: 600; }
+
+        /* === НИЖНИЕ КАРТОЧКИ === */
+        .bottom-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .feature-content {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .feature-card h3 { font-size: 20px; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+        
+        .feature-img {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            z-index: 0;
+        }
+
+        /* === ПОДВАЛ === */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 20px;
+            background: #050505;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand h2 { font-size: 20px; display: flex; align-items: center; gap: 8px;}
+        .footer-brand h2 span { color: var(--accent); }
+        .footer-brand p { color: var(--text-muted); font-size: 14px; margin: 16px 0; }
+
+        .footer-col h4 { font-size: 16px; margin-bottom: 20px; font-weight: 600; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col a { color: var(--text-muted); font-size: 14px; transition: 0.2s; }
+        .footer-col a:hover { color: var(--accent); }
+
+        /* === МОДАЛКА ОПЛАТЫ === */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            width: 100%; max-width: 440px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .modal h2 { font-size: 24px; margin-bottom: 12px; }
+        .modal p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+        
+        .pay-amount {
+            font-size: 42px; font-weight: 800; color: var(--accent);
+            margin-bottom: 24px; letter-spacing: -1px;
+        }
+        
+        .requisites {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed var(--border);
+            padding: 16px; border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 18px; font-weight: 600;
+            cursor: pointer; transition: 0.2s;
+            color: #fff;
+        }
+        .requisites:hover { background: rgba(255, 107, 0, 0.05); border-color: var(--accent); }
+        .requisites span { display: block; font-size: 12px; color: var(--text-muted); font-weight: 400; margin-bottom: 4px; }
+
+        .close-btn {
+            position: absolute; top: 16px; right: 16px;
+            background: none; color: var(--text-muted); font-size: 24px;
+        }
+        .close-btn:hover { color: #fff; }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .nav-cards { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .hero h1 { font-size: 36px; }
+        }
+
+        @media (max-width: 600px) {
+            .nav-cards { grid-template-columns: 1fr; }
+            .bottom-cards { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .hero { padding: 80px 20px 40px; }
+            .hero h1 { font-size: 32px; }
+            .big-banner { padding: 30px 20px; }
+            .big-banner p { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO СЕКЦИЯ -->
+    <header class="hero">
+        <div class="badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            FarePay Ecosystem
+        </div>
+        <h1>Добро пожаловать в FarePay!</h1>
+        <p>Экосистема для быстрой и удобной оплаты проезда. Скачивайте приложение для Android или iOS, изучайте код и пользуйтесь премиальными функциями.</p>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="container">
+        
+        <!-- БЫСТРАЯ НАВИГАЦИЯ -->
+        <div class="nav-cards">
+            <a href="https://drive.google.com/file/d/1-wtngcjFferr9Y5xvQunrZy1khHRfaXn/view?usp=drive_link" class="nav-card">
+                <div class="nav-card-icon">🤖</div>
+                <h3>Android версия</h3>
+                <p>Скачать .apk файл</p>
+            </a>
+            <a href="https://mailruo2hwie.github.io/bus_iphone/" class="nav-card">
+                <div class="nav-card-icon">🍏</div>
+                <h3>iOS версия</h3>
+                <p>Ссылка на GitHub</p>
+            </a>
+            <a href="#" class="nav-card" onclick="openModal()">
+                <div class="nav-card-icon">💳</div>
+                <h3>Оплата СБП</h3>
+                <p>Поддержать проект</p>
+            </a>
+            <a href="https://t.me/Demon_of_latvia" target="_blank" class="nav-card">
+                <div class="nav-card-icon">💬</div>
+                <h3>Поддержка</h3>
+                <p>Написать разработчику</p>
+            </a>
+        </div>
+
+        <!-- СЕТКА: БАННЕР + САЙДБАР -->
+        <div class="main-grid">
+            
+            <!-- Большой баннер (Покупка) -->
+            <div class="big-banner" id="android">
+                <h2>Полный доступ к приложению</h2>
+                <p>Приобретите доступ к исходникам и готовым сборкам. Оплата проходит напрямую разработчику. После оплаты напишите в Telegram для получения файлов.</p>
+                
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="openModal()">
+                        Купить за 399 ₽
+                    </button>
+                    <a href="#ios" class="btn btn-secondary">
+                        Посмотреть iOS
+                    </a>
+                </div>
+            </div>
+
+            <!-- Сайдбар -->
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-title">
+                        Статус проекта
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item"><span>Версия Android</span> <b>v2.1.0</b></li>
+                        <li class="activity-item"><span>Обновление iOS</span> <b>Недавно</b></li>
+                        <li class="activity-item"><span>Статус серверов</span> <b style="color: #00ff66;">Онлайн</b></li>
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-title">Поддержка</div>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        Если у вас возникли проблемы со скачиванием или оплатой — напишите напрямую в Telegram.
+                    </p>
+                    <a href="https://t.me/Demon_of_latvia" target="_blank" class="btn btn-secondary" style="width: 100%; margin-top: 15px; padding: 10px; font-size: 14px;">@Demon_of_latvia</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- НИЖНИЕ КАРТОЧКИ -->
+        <div class="bottom-cards" id="ios">
+            <div class="feature-card">
+                <div class="feature-content">
+                    <h3>Скачать для Android</h3>
+                    <p>Полная версия приложения с QR-кодом и оплатой.</p>
+                    <!-- Сюда вставишь ссылку на файл -->
+                    <a href="#" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Скачать .apk</a>
+                </div>
+                <div class="feature-img">📱</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-content">
+                    <h3>Репозиторий iOS</h3>
+                    <p>Исходный код и инструкция по установке на iPhone.</p>
+                    <!-- Сюда вставишь ссылку на гитхаб -->
+                    <a href="#" class="btn btn-secondary" style="padding: 10px 20px; font-size: 14px; border: 1px solid var(--border);">Открыть GitHub</a>
+                </div>
+                <div class="feature-img">💻</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2><span>Fare</span>Pay</h2>
+                <p>Проект создан в демонстрационных целях. Оплата проходит напрямую разработчику.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Платформа</h4>
+                <ul>
+                    <li><a href="#">Скачать APK</a></li>
+                    <li><a href="#">iOS версия</a></li>
+                    <li><a href="#" onclick="openModal()">Оплатить СБП</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#android">Покупка</a></li>
+                    <li><a href="#ios">Скачать</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <ul>
+                    <li><a href="https://t.me/Demon_of_latvia" target="_blank">Telegram</a></li>
+                    <li><a href="#">Поддержка</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Документация</h4>
+                <ul>
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                    <li><a href="#">Пользовательское соглашение</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО ОПЛАТЫ -->
+    <div class="modal-overlay" id="payModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            
+            <h2>Оплата СБП</h2>
+            <p>Переведите 399 ₽ на карту или по номеру телефона, затем нажмите кнопку ниже, чтобы отправить чек.</p>
+            
+            <div class="pay-amount">399 ₽</div>
+            
+            <div class="requisites" onclick="copyCard()">
+                <span>Номер карты / телефон (нажмите чтобы скопировать)</span>
+                +7 (900) 938-56-48
+            </div>
+            
+            <!-- Ссылка в ТГ для отправки чека -->
+            <a href="https://t.me/Demon_of_latvia" target="_blank" class="btn btn-primary" style="width: 100%;">
+                Я оплатил, отправить чек
+            </a>
+        </div>
+    </div>
+
+    <!-- СКРИПТЫ -->
+    <script>
+        const modal = document.getElementById('payModal');
+        
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        function copyCard() {
+            const text = '+79009385648'; // ТУТ СВОЙ НОМЕР
+            navigator.clipboard.writeText(text).then(() => {
+                const req = document.querySelector('.requisites');
+                const originalText = req.innerHTML;
+                req.innerHTML = '<span style="color:#00ff66;">Скопировано!</span>' + text;
+                setTimeout(() => {
+                    req.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
